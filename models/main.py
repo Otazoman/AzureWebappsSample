@@ -4,8 +4,6 @@ import os
 import sys
 import traceback
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-
 import config
 import azure.common
 from azure.storage import CloudStorageAccount
@@ -19,7 +17,6 @@ def main():
         # Authentication
         config = dict(s.split('=', 1) for s in account_connection_string.split(';') if s)
         account_name = config.get('AccountName')
-        account_key = config.get('AccountKey')
         endpoint_suffix = config.get('EndpointSuffix')
         if endpoint_suffix == None:
             table_endpoint  = config.get('TableEndpoint')
@@ -37,11 +34,11 @@ def main():
         tablename = 'testsample'
 
         ### テーブル作成
-        #tc1 = TableOperate.create_table(account,tablename)
-        #print(tc1)
+        tc1 = TableOperate.create_table(account,tablename)
+        print(tc1)
         ## テーブル削除
-        tc2 = TableOperate.delete_table(account,tablename)
-        print(tc2)
+        #tc2 = TableOperate.delete_table(account,tablename)
+        #print(tc2)
         
         ### レコード追加
         """

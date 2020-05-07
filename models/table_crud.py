@@ -16,7 +16,7 @@ class TableOperate():
             table_service = account.create_table_service()
             table_service.create_table(table_name)
             return True
-        except Exception as err:
+        except Exception as e:
             print('Error creating table, ' + table_name + 'check if it already exists')
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
@@ -28,7 +28,7 @@ class TableOperate():
             if(table_service.exists(table_name)):
                 table_service.delete_table(table_name)
                 return True
-        except Exception as err:
+        except Exception as e:
             print('Error Delete table, ' + table_name )
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
@@ -56,7 +56,7 @@ class RecordOperate():
             else:
                 return False
             return True
-        except Exception as err:
+        except Exception as e:
             print('Error Insert Record' )
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
@@ -74,7 +74,7 @@ class RecordOperate():
             else :
                entity = table_service.get_entity(tablename)
             return entity
-        except Exception as err:
+        except Exception as e:
             print('Error Get Records')
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
@@ -96,7 +96,7 @@ class RecordOperate():
             else :
                entity = table_service.delete_entity(tablename)
             return True
-        except Exception as err:
+        except Exception as e:
             print('Error Get Records')
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
