@@ -1,13 +1,16 @@
 
 import json
+import os
 import sys
 import traceback
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import config
 import azure.common
 from azure.storage import CloudStorageAccount
-from tablestorage.table_crud import TableOperate , RecordOperate
-from tablestorage.tablestorage_account import TableStorageAccount
+from table_crud import TableOperate , RecordOperate
+from tablestorage_account import TableStorageAccount
 
 account_connection_string = config.STORAGE_CONNECTION_STRING
 
@@ -34,11 +37,11 @@ def main():
         tablename = 'testsample'
 
         ### テーブル作成
-        tc1 = TableOperate.create_table(account,tablename)
-        print(tc1)
+        #tc1 = TableOperate.create_table(account,tablename)
+        #print(tc1)
         ## テーブル削除
-        #tc2 = TableOperate.delete_table(account,tablename)
-        #print(tc2)
+        tc2 = TableOperate.delete_table(account,tablename)
+        print(tc2)
         
         ### レコード追加
         """
