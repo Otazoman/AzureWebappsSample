@@ -11,7 +11,7 @@ class TableOperate():
     def __init__(self,account=None,table_name=None):
         self.account = account
         self.table_name = table_name
-    def create_table(account,table_name):
+    def create_table(self,account,table_name):
         try:
             table_service = account.create_table_service()
             table_service.create_table(table_name)
@@ -22,7 +22,7 @@ class TableOperate():
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
-    def delete_table(account,table_name):
+    def delete_table(self,account,table_name):
         try:
             table_service = account.create_table_service()
             if(table_service.exists(table_name)):
@@ -39,12 +39,10 @@ class RecordOperate():
     """
     レコード操作
     """
-    def __init__(self,account,table_name=None,**kwargs):
+    def __init__(self,account=None,table_name=None):
         self.account = account
         self.tablename = table_name
-        self.contents = kwargs.contents
-        self.conditions = kwargs.conditions
-    def insert_records(account,tablename,contents):
+    def insert_records(self,account,tablename,contents):
         try:
             table_service = account.create_table_service()
             if len(contents) == 1:
@@ -62,7 +60,7 @@ class RecordOperate():
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
-    def getvalue_table(account,tablename,conditions):
+    def getvalue_table(self,account,tablename,conditions):
         try:
             table_service = account.create_table_service()
             if type(conditions) is str:
@@ -80,7 +78,7 @@ class RecordOperate():
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
-    def delete_records(account,tablename,conditions):
+    def delete_records(self,account,tablename,conditions):
         try:
             table_service = account.create_table_service()
             if type(conditions) is str:

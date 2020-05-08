@@ -1,8 +1,19 @@
+import json
 import os
+import pathlib
+#import re
+import sys
 import werkzeug
 from werkzeug.utils import secure_filename
 
 from flask import Flask, request, make_response, jsonify, render_template
+
+currentdir = pathlib.Path(__file__).resolve().parent
+sys.path.append(str(currentdir)+"/../models/")
+from tablestorage import TableStorageOperate
+
+#sys.path.append(str(currentdir)+"/../")
+#import models
 
 app = Flask(__name__)
 
@@ -20,20 +31,20 @@ def select():
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
     if request.method == 'GET':
-       return render_template('upload.html')
+       return render_template('upload.html',content='')
     if request.method == 'POST':
        file = request.files['uploadFile']
        if file:
           filename = secure_filename(file.filename)
           filepath = os.path.join(UPLOAD_DIR, filename) 
           file.save(filepath)
-          ### データベースインサートクラスに渡す
-          with open(filepath, "r") as test_data:
-               content = test_data.read()
-
+          # Call Table Insert 
+          # ToDo Filename get set Tablename
+          tablename = 'testsample'
+          ts = TableStorageOperate()
+          ts.insert_table(filepath,tablename)
           os.remove(filepath)
-          return render_template('select.html',content=content)
-    
+          return render_template('upload.html',content='アップロード完了しました')
 
  
 @app.errorhandler(400)

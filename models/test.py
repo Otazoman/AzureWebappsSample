@@ -4,9 +4,10 @@ import os
 import sys
 import traceback
 
-import config
 import azure.common
 from azure.storage import CloudStorageAccount
+
+import config
 from table_crud import TableOperate , RecordOperate
 from tablestorage_account import TableStorageAccount
 
@@ -34,12 +35,15 @@ def main():
         tablename = 'testsample'
 
         ### テーブル作成
-        tc1 = TableOperate.create_table(account,tablename)
-        print(tc1)
+        #to = TableOperate()
+        #tc1 = to.create_table(account,tablename)
+        #print(tc1)
         ## テーブル削除
-        #tc2 = TableOperate.delete_table(account,tablename)
+        #tc2 = to.delete_table(account,tablename)
         #print(tc2)
-        
+
+        ro = RecordOperate()
+
         ### レコード追加
         """
         contents = [
@@ -58,13 +62,15 @@ def main():
         #contents = [
         #    {'PartitionKey': '003', 'RowKey': '1', 'Value' : '0'}
         #]
-        #tc3 = RecordOperate.insert_records(account=account,tablename=tablename,contents=contents)
+        
+        #tc3 = ro.insert_records(account=account,tablename=tablename,contents=contents)
+        #print(tc3)
 
         ### レコード照会
         #conditions = ['003','1']
         #conditions = "PartitionKey eq '001'"
         #conditions = ""
-        #tc4 = RecordOperate.getvalue_table(account=account,tablename=tablename,conditions=conditions)
+        #tc4 = ro.getvalue_table(account=account,tablename=tablename,conditions=conditions)
         #if type(tc4) is azure.storage.table.models.Entity:
         #   print(type(tc4))
         #   print(tc4)
@@ -77,10 +83,8 @@ def main():
         #conditions = ['003','1']
         #conditions = "PartitionKey eq '001'"
         #conditions = ""
-        #tc5 = RecordOperate.delete_records(account=account,tablename=tablename,conditions=conditions)
+        #tc5 = ro.delete_records(account=account,tablename=tablename,conditions=conditions)
         #print(tc5)
-
-
 
     except Exception as e:
         t, v, tb = sys.exc_info()
