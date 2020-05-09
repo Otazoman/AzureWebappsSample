@@ -6,6 +6,14 @@
     <title>検索画面</title>
 </head>
 <body>
-    <div id = "content">{{content}}</div>
+    <form action="/select" method="post" enctype="multipart/form-data">
+        <p>検索条件を指定して検索してください</p>
+        <p>PartitionKey: <input type="text" name="partitionkey" size="10"></input></p>
+        <p>RowKey:　　 <input type="text" name="rowkey" size="10"></input></p>
+        <p><input type="submit" value="検索"/></p>
+    </form>
+    {{content | safe}}
+
+
 </body>
 </html>

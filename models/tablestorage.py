@@ -42,10 +42,18 @@ class TableStorageOperate:
                         contents.append(json.loads(s))
             ro = RecordOperate()
             ir = ro.insert_records(account=self.account,tablename=tablename,contents=contents)
-            print(ir)
         except Exception as e:
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
 
-    
+    def select_records(self,condition,tablename):
+        try:
+            ro = RecordOperate()
+            sr = ro.getvalue_table(account=self.account,tablename=tablename,conditions=condition)
+            return sr
+        except Exception as e:
+            t, v, tb = sys.exc_info()
+            print(traceback.format_exception(t,v,tb))
+            print(traceback.format_tb(e.__traceback__))
+   
