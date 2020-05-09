@@ -64,6 +64,34 @@ def upload():
           os.remove(filepath)
           return render_template('upload.html',content='アップロード完了しました')
 
+@app.route("/dalete", methods=['GET', 'POST'])
+def dalete():
+    ts = TableStorageOperate()
+    vr = TableRender()
+    if request.method == 'GET':
+       conditions = ""
+       results = ts.select_records(conditions,tablename)
+       body = vr.tablerender(results)
+       return render_template('dalete.html',content=body)
+    if request.method == 'POST':
+       pkey = request.form.get('partitionkey')
+       rkey = request.form.get('rowkey')
+       if len(pkey) !=0 and len(rkey) !=0:
+          conditions = [pkey,rkey]
+       elif len(pkey):
+          conditions = "PartitionKey eq '" + pkey +"'"
+       else:
+          conditions = ""
+       # Call Delete Records
+       ts.delete_records(conditions,tablename)
+       # After view Render
+       conditions = ""
+       results = ts.select_records(conditions,tablename)
+       body = vr.tablerender(results)
+       return render_template('dalete.html',content=body)
+
+
+
  
 @app.errorhandler(400)
 @app.errorhandler(404)

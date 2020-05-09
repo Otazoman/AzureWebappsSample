@@ -11,7 +11,6 @@ import config
 from table_crud import TableOperate , RecordOperate
 from tablestorage_account import TableStorageAccount
 
-
 class TableStorageOperate:
     """ Table Storage Operate Class """
     def __init__(self):
@@ -30,7 +29,6 @@ class TableStorageOperate:
         self.account = TableStorageAccount(account_name = account_name, \
                                         connection_string = account_connection_string, \
                                         endpoint_suffix = endpoint_suffix)       
-
     def insert_table(self,file,tablename):
         try:
             contents = []
@@ -42,11 +40,12 @@ class TableStorageOperate:
                         contents.append(json.loads(s))
             ro = RecordOperate()
             ir = ro.insert_records(account=self.account,tablename=tablename,contents=contents)
+            return ir
         except Exception as e:
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
-
+            return False
     def select_records(self,condition,tablename):
         try:
             ro = RecordOperate()
@@ -56,4 +55,14 @@ class TableStorageOperate:
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
-   
+            return False
+    def delete_records(self,condition,tablename):
+        try:
+            ro = RecordOperate()
+            dr = ro.delete_records(account=self.account,tablename=tablename,conditions=condition)
+            return dr
+        except Exception as e:
+            t, v, tb = sys.exc_info()
+            print(traceback.format_exception(t,v,tb))
+            print(traceback.format_tb(e.__traceback__))
+            return False

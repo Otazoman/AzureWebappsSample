@@ -14,7 +14,7 @@ class TableRender():
             ohtml = self.make_html(t,data)
             return ohtml
         except Exception as e:
-            print('Error Delete table' )
+            print('Error TableRendermain' )
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
