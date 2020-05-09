@@ -1,5 +1,5 @@
-from datetime import datetime as dt
-import json
+#from datetime import datetime as dt
+#import json
 import os
 import pathlib
 #import re
@@ -13,8 +13,8 @@ currentdir = pathlib.Path(__file__).resolve().parent
 sys.path.append(str(currentdir)+"/../models/")
 from tablestorage import TableStorageOperate
 
-#sys.path.append(str(currentdir)+"/../")
-#import models
+sys.path.append(str(currentdir)+"/../controllers/")
+from viewrender import TableRender
 
 app = Flask(__name__)
 
@@ -25,7 +25,7 @@ tablename = 'testsample'
 
 @app.route("/")
 def hello():
-    return "Hello World"
+    return "Hello Sample"
 
 @app.route("/select", methods=['GET', 'POST'])
 def select():
@@ -43,59 +43,8 @@ def select():
        # Call Select Records
        ts = TableStorageOperate()
        results = ts.select_records(conditions,tablename)
-
-       # Get Title
-       keys = []
-       for i,rs in enumerate(results):
-           if type(rs) is str:
-              rs = dict(rs)
-           if i == 0:
-              keys = [ k for k in rs.keys()]
-           else:
-              break
-       # render html
-       body = """
-       <div id = content>
-       <style type="text/css">
-            th, td {
-                    width: 100px ;
-            }
-            thead, tbody {
-            display: block;
-            }
-            tbody {
-            overflow-x: hidden;
-            overflow-y: scroll;
-            height: 600px;
-            }
-       </style>
-       <table border=1>
-            <thead>
-                <tr>
-       """
-       for k in keys:
-           if k != 'etag':
-              body += '<th>' + k + '</th>'
-       body += '</tr></thead>'
-
-       body += '<tbody>'
-       for r in results:
-           body += '<tr>'
-           for k in keys:
-               if k != 'etag':
-                  if type(r[k]) is str:
-                     body += '<td>' + r[k] + '</td>'
-                  elif isinstance(r[k],dt):
-                     v = r[k].strftime('%Y-%m-%d %H:%M:%S')
-                     body += '<td>' + v + '</td>'
-                  else:
-                     body += '<td>－</td>'
-           body += '</tr>'
-       body += """
-            </tbody>
-        </table>
-        </div>
-        """   
+       vr = TableRender()
+       body = vr.tablerender(results)
        return render_template('select.html',content=body)
 
 @app.route("/upload", methods=['GET', 'POST'])
