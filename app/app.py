@@ -24,8 +24,8 @@ tablename = 'testsample'
 
 
 @app.route("/")
-def hello():
-    return "Hello Sample"
+def started():
+    return render_template('index.html')
 
 @app.route("/select", methods=['GET', 'POST'])
 def select():
@@ -55,12 +55,12 @@ def upload():
        file = request.files['uploadFile']
        if file:
           filename = secure_filename(file.filename)
+          tn = os.path.splitext(filename)[0]
           filepath = os.path.join(UPLOAD_DIR, filename) 
           file.save(filepath)
           # Call Table Insert 
-          # ToDo Filename get set Tablename
           ts = TableStorageOperate()
-          ts.insert_table(filepath,tablename)
+          ts.insert_table(filepath,tn)
           os.remove(filepath)
           return render_template('upload.html',content='アップロード完了しました')
 
@@ -89,9 +89,6 @@ def dalete():
        results = ts.select_records(conditions,tablename)
        body = vr.tablerender(results)
        return render_template('dalete.html',content=body)
-
-
-
  
 @app.errorhandler(400)
 @app.errorhandler(404)
