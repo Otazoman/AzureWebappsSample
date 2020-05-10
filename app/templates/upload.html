@@ -9,6 +9,7 @@
     <form action="/upload" method="post" enctype="multipart/form-data">
         <p>読込対象ファイルを選択して下さい。</p>
         <p>ファイル名はテーブル名と同一としてください。</p>
+        <p>テーブル名：　　{{selectbox | safe}}</p>
         <p><input type="file" name="uploadFile" required></p>
         <p><input type="submit" value="読込"/></p>
         <div id = "content">{{content}}</div>

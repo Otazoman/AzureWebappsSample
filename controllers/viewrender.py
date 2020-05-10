@@ -2,7 +2,7 @@ from datetime import datetime as dt
 import sys
 import traceback
 
-class TableRender():
+class HtmlRender():
     """
     テーブルを描画して返す
     """
@@ -92,7 +92,20 @@ class TableRender():
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
+    def make_selectbox(self,data,name):
+        try:
+            body = '<select name = "table_name">'
+            for sb in data:
+                if name == sb:
+                   body += '<option value="' + sb + '" selected >' + sb +'</option>'
+                else:
+                   body += '<option value="' + sb + '">' + sb +'</option>'
+            body += '</select>'
+            return body
+        except Exception as e:
+            print('Error get_title')
+            t, v, tb = sys.exc_info()
+            print(traceback.format_exception(t,v,tb))
+            print(traceback.format_tb(e.__traceback__))
+            return False
 
-
-
-  

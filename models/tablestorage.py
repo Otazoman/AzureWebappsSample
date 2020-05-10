@@ -66,3 +66,14 @@ class TableStorageOperate:
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
+    def get_table_list(self):
+        try:
+            to = TableOperate()
+            tl = to.list_tables(account=self.account)
+            tables = [ l.name for l in tl ]
+            return tables
+        except Exception as e:
+            t, v, tb = sys.exc_info()
+            print(traceback.format_exception(t,v,tb))
+            print(traceback.format_tb(e.__traceback__))
+            return False

@@ -8,9 +8,19 @@ class TableOperate():
     """
     テーブル操作
     """
-    def __init__(self,account=None,table_name=None):
+    def __init__(self,account=None):
         self.account = account
-        self.table_name = table_name
+    def list_tables(self,account):
+        try:
+            table_service = account.create_table_service()
+            tablelist = table_service.list_tables()
+            return tablelist
+        except Exception as e:
+            print('Error Get list tables')
+            t, v, tb = sys.exc_info()
+            print(traceback.format_exception(t,v,tb))
+            print(traceback.format_tb(e.__traceback__))
+            return False
     def create_table(self,account,table_name):
         try:
             table_service = account.create_table_service()

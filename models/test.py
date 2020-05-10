@@ -32,10 +32,14 @@ def main():
         print ('---------------------------------------------------------------')
         print('Azure Storage Table samples')
 
-        tablename = 'testsample'
 
-        ### テーブル作成
-        #to = TableOperate()
+        #tablename = 'testsample'
+        to = TableOperate()
+        ## テーブル一覧を取得する。
+        tc0 = to.list_table(account)
+        for l in tc0:
+            print(l.name)
+        ## テーブル作成
         #tc1 = to.create_table(account,tablename)
         #print(tc1)
         ## テーブル削除
