@@ -9,6 +9,7 @@ class HtmlRender():
     def __init__(self,data=None):
         self.data = data
     def tablerender(self,data):
+        """ Body Table Render"""
         try:
             t = self.get_title(data)
             ohtml = self.make_html(t,data)
@@ -20,6 +21,7 @@ class HtmlRender():
             print(traceback.format_tb(e.__traceback__))
             return False
     def get_title(self,data):
+        """ Make Titele"""
         try:
             keys = []
             for i,rs in enumerate(data):
@@ -37,6 +39,7 @@ class HtmlRender():
             print(traceback.format_tb(e.__traceback__))
             return False
     def make_html(self,titles,data):
+        """ Make Html Tag """
         try:
             body = """
             <div id = content>
@@ -93,8 +96,9 @@ class HtmlRender():
             print(traceback.format_tb(e.__traceback__))
             return False
     def make_selectbox(self,data,name):
+        """ Make SelectBox Html Tag"""
         try:
-            body = '<select name = "table_name">'
+            body = '<select name = "table_name" onchange="selectboxChange();>'
             for sb in data:
                 if name == sb:
                    body += '<option value="' + sb + '" selected >' + sb +'</option>'
@@ -108,4 +112,3 @@ class HtmlRender():
             print(traceback.format_exception(t,v,tb))
             print(traceback.format_tb(e.__traceback__))
             return False
-

@@ -5,12 +5,11 @@ from azure.storage import CloudStorageAccount
 from azure.storage.table import TableService, Entity
 
 class TableOperate():
-    """
-    テーブル操作
-    """
+    """ Tables """
     def __init__(self,account=None):
         self.account = account
     def list_tables(self,account):
+        """ Get Table Name list"""
         try:
             table_service = account.create_table_service()
             tablelist = table_service.list_tables()
@@ -22,9 +21,11 @@ class TableOperate():
             print(traceback.format_tb(e.__traceback__))
             return False
     def create_table(self,account,table_name):
+        """ Create table"""
         try:
             table_service = account.create_table_service()
-            table_service.create_table(table_name)
+            if not table_service.exists(table_name):
+                table_service.create_table(table_name)
             return True
         except Exception as e:
             print('Error creating table, ' + table_name + 'check if it already exists')
@@ -33,6 +34,7 @@ class TableOperate():
             print(traceback.format_tb(e.__traceback__))
             return False
     def delete_table(self,account,table_name):
+        """ Delete table"""
         try:
             table_service = account.create_table_service()
             if(table_service.exists(table_name)):
@@ -46,13 +48,12 @@ class TableOperate():
             return False
 
 class RecordOperate():
-    """
-    レコード操作
-    """
+    """ Records """
     def __init__(self,account=None,table_name=None):
         self.account = account
         self.tablename = table_name
     def insert_records(self,account,tablename,contents):
+        """ Upsert """
         try:
             table_service = account.create_table_service()
             if len(contents) == 1:
@@ -71,6 +72,7 @@ class RecordOperate():
             print(traceback.format_tb(e.__traceback__))
             return False
     def getvalue_table(self,account,tablename,conditions):
+        """ Find """
         try:
             table_service = account.create_table_service()
             if type(conditions) is str:
@@ -89,6 +91,7 @@ class RecordOperate():
             print(traceback.format_tb(e.__traceback__))
             return False
     def delete_records(self,account,tablename,conditions):
+        """ Delete """
         try:
             table_service = account.create_table_service()
             if type(conditions) is str:
@@ -96,13 +99,13 @@ class RecordOperate():
                for s in se:
                    pk = s.PartitionKey
                    rk = s.RowKey
-                   entity = table_service.delete_entity(tablename, pk, rk)
+                   table_service.delete_entity(tablename, pk, rk)
             elif type(conditions) is list and len(conditions) == 2:
                pk = conditions[0]
                rk = conditions[1]
-               entity = table_service.delete_entity(tablename, pk, rk)
+               table_service.delete_entity(tablename, pk, rk)
             else :
-               entity = table_service.delete_entity(tablename)
+               table_service.delete_entity(tablename)
             return True
         except Exception as e:
             print('Error Get Records')

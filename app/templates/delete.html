@@ -6,7 +6,12 @@
     <title>削除画面</title>
 </head>
 <body>
-    <form action="/dalete" method="post" enctype="multipart/form-data">
+    <script type="text/javascript" language="javascript">
+        function selectboxChange() {
+            location.href = "/delete";
+        }
+      </script>
+    <form action="/delete" method="post" enctype="multipart/form-data">
         <p>削除する条件を指定してください</p>
         <p>テーブル名：　　{{selectbox | safe}}</p>
         <p>PartitionKey: <input type="text" name="partitionkey" size="10"></input></p>

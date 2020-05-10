@@ -35,10 +35,23 @@ def main():
 
         #tablename = 'testsample'
         to = TableOperate()
+        ro = RecordOperate()
         ## テーブル一覧を取得する。
-        tc0 = to.list_table(account)
-        for l in tc0:
+        tcl = to.list_tables(account)
+        conditions = ""
+        for l in tcl:
+            tc0 = ro.getvalue_table(account=account,tablename=l.name,conditions=conditions)
+            print(type(tc0))
+            print(tc0)           
             print(l.name)
+            for i,r in enumerate(tc0):
+                if r:
+                    print(i)
+                    print(type(r))
+                    print(r)
+
+
+        
         ## テーブル作成
         #tc1 = to.create_table(account,tablename)
         #print(tc1)
@@ -46,7 +59,6 @@ def main():
         #tc2 = to.delete_table(account,tablename)
         #print(tc2)
 
-        ro = RecordOperate()
 
         ### レコード追加
         """
