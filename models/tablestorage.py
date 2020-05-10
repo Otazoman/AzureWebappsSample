@@ -91,8 +91,9 @@ class TableStorageOperate:
             ro = RecordOperate()
             for lt in listtables:
                 tc0 = ro.getvalue_table(account=self.account,tablename=lt,conditions=conditions)
-                tablenames = [ r for r in tc0 if r ]
-            return tablenames
+                for r in tc0:
+                    if r:
+                       return lt
         except Exception as e:
             t, v, tb = sys.exc_info()
             print(traceback.format_exception(t,v,tb))

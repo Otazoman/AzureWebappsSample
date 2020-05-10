@@ -98,7 +98,7 @@ class HtmlRender():
     def make_selectbox(self,data,name):
         """ Make SelectBox Html Tag"""
         try:
-            body = '<select name = "table_name" onchange="selectboxChange();>'
+            body = '<select name = "table_name">'
             for sb in data:
                 if name == sb:
                    body += '<option value="' + sb + '" selected >' + sb +'</option>'
