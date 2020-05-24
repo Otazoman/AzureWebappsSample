@@ -4,7 +4,6 @@ import re
 import sys
 import traceback
 
-import azure.common
 from azure.storage import CloudStorageAccount
 
 import config
